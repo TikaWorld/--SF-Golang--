@@ -4,7 +4,14 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"time"
 )
+
+func say(s string) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(s, "***", i)
+	}
+}
 
 func main() {
 	runtime.GOMAXPROCS(11)
@@ -20,6 +27,9 @@ func main() {
 		defer wait.Done()
 		fmt.Println(msg)
 	}("Hi")
-
 	wait.Wait()
+
+	go say("1")
+	go say("2")
+	time.Sleep(time.Second * 3)
 }
